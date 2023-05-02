@@ -30,13 +30,14 @@ function Login(props) {
   };
 
   return (
-    <div className="login-container">
-      <h1>Login</h1>
+    <div>
+      <div className="login-title">Login</div>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="email">Email</label>
           <input
             type="email"
+            placeholder="example@gmail.com"
             id="email"
             value={email}
             onChange={handleEmailChange}
@@ -46,17 +47,21 @@ function Login(props) {
           <label htmlFor="password">Password</label>
           <input
             type="password"
+            placeholder="digite sua senha"
             id="password"
             value={password}
             onChange={handlePasswordChange}
           />
         </div>
-        <button type="submit">Login</button>
-        <button className="button" onClick={handleRecSenha}>
+
+        <button className="log-in-btn-pass" onClick={handleRecSenha}>
           Recuperar senha
         </button>
-        <button className="button" onClick={handleRegister}>
+        <button className="log-in-btn-register" onClick={handleRegister}>
           Cadastre-se
+        </button>
+        <button className="log-in-btn-enter" onClick={handleSubmit}>
+          Entrar
         </button>
       </form>
     </div>
