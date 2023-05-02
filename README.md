@@ -1,3 +1,12 @@
+#Acesso:
+
+Para acessar digite no terminal do seu complilador
+
+###`npm install`
+###`npm run dev`
+
+Após isso acesse a url gerada adicionando ###`/Login` ao final da URL, estamos trabalhando para realizar a alteração de rota para ir ao inicio do start da aplicação
+
 # Catálogo de Viagens
 
 Este é um site de catálogo de viagens onde você pode encontrar informações sobre destinos turísticos populares em todo o mundo. O site oferece aos usuários uma ampla variedade de recursos para ajudá-los a planejar suas viagens, incluindo fotos, vídeos, avaliações de hotéis, guias de viagem e dicas para economizar dinheiro.
