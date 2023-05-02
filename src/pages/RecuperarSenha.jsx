@@ -11,13 +11,16 @@ function RecuperarSenha(props) {
   return (
 
     <div>
-      <h1>Recuperação de Senha</h1>
+        <div className='rec-title'>Recuperação de senha</div>
       <form>
-        <label htmlFor="email">E-mail:</label>
-        <input type="email" id="email" name="email" />
-
-        <button className='button' onClick={handleLogin}>Enviar</button>
-        <button className="button" onClick={handleLogin}>Voltar</button>
+        <div className='form-group'>
+          <label htmlFor="email">E-mail:</label>
+          <input type="email" placeholder='example@email.com' id="email" name="email" />
+        </div>
+        <div>
+          <button className='btn-enviar-senha' onClick={handleLogin}>Enviar</button>
+          <button className="btn-voltar" onClick={handleLogin}>Voltar</button>
+        </div>
       </form>
     </div>
   );

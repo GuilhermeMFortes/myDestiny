@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../Styles/Cadastro.css'
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function Cadastro(props) {
   const navigate = useNavigate()
@@ -33,21 +33,30 @@ function Cadastro(props) {
   };
 
   return (
+    <div className='body'>
+    <div className='register-title'>Cadastro</div>
     <div>
-      <h1>Cadastro</h1>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="nome">Nome:</label>
-        <input type="text" id="nome" value={nome} onChange={handleNomeChange} />
-
+       <form onSubmit={handleSubmit}>
+    <div className='form-group'>        
+      <label htmlFor="nome">Nome:</label>
+      <input type="text" placeholder='digite seu nome' id="nome" value={nome} onChange={handleNomeChange} />
+    </div>    
+    <div className='form-group'>
         <label htmlFor="email">E-mail:</label>
-        <input type="email" id="email" value={email} onChange={handleEmailChange} />
-
+        <input type="email" placeholder='example@email.com' id="email" value={email} onChange={handleEmailChange} />
+    </div>
+    <div  className='form-group'>
         <label htmlFor="senha">Senha:</label>
-        <input type="password" id="senha" value={senha} onChange={handleSenhaChange} />
+        <input type="password" placeholder='digite sua senha' id="senha" value={senha} onChange={handleSenhaChange} />
+    </div>
+        </form>
+    </div>
 
-        <button className='button' onClick={handleLogin}>Cadastrar</button>
-        <button className="button" onClick={handleLogin}>Voltar</button>
-      </form>
+    <div>
+        <button className='btn-cadastrar' onClick={handleLogin}>Cadastrar</button>
+        <button className="btn-voltar" onClick={handleLogin}>Voltar</button>
+    </div>
+
     </div>
   );
 }
