@@ -2,10 +2,10 @@
 
 Para acessar digite no terminal do seu complilador
 
-###`npm install`
-###`npm run dev`
+`npm install`
+`npm run dev`
 
-Após isso acesse a url gerada adicionando ###`/Login` ao final da URL, estamos trabalhando para realizar a alteração de rota para ir ao inicio do start da aplicação
+Após isso acesse a url gerada adicionando `/Login` ao final da URL, estamos trabalhando para realizar a alteração de rota para ir ao inicio do start da aplicação
 
 # Catálogo de Viagens
 
