@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  background: none;
 }
 
 .form-group {
@@ -21,7 +22,7 @@
 .login-title{
   padding: 25px;
   font-size: 40px;
-  color: #007bff;
+  color: white;
   font-weight: 700;
 }
 .button-group {

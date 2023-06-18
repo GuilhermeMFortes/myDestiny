@@ -16,7 +16,7 @@ body {
   font-family: 'Roboto', sans-serif;
   font-weight: 700;
   font-size: 35px;
-  color: #007bff;
+  color: white;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -56,6 +56,6 @@ body {
 .form-group {
   display: flex;
   flex-direction: column ;
-  width: 70%;
+  width: 100%;
   margin-bottom: 1rem;
 }
