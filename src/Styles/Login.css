@@ -1,77 +1,64 @@
-form {
+.login-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 1rem;
 }
 
-label {
-  margin: 0.5rem 0;
-  color: black;
+.form-group {
+  margin-bottom: 10px;
 }
 
-body {
+.label {
+  font-weight: bold;
+}
+
+.input {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+.login-title{
+  padding: 25px;
+  font-size: 40px;
+  color: #007bff;
+  font-weight: 700;
+}
+.button-group {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-  padding: 0;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.log-in-btn-pass,
+.log-in-btn-register {
+  padding: 10px 20px;
+  background-color: transparent;
+  color: black;
+  border: none;
+  cursor: pointer;
 }
 
 .log-in-btn-enter {
-  background-color: #009051;
-  border: none;
+  background-color: #007bff;
   color: white;
-  cursor: pointer;
-  padding: 15px 50px;
-  text-align: center;
-  display: inline-block;
-  font-size: 15px;
-  margin: 20px 10px;
   border-radius: 5px;
+  cursor: pointer;
+  border-color: transparent;
 }
 
-
-.log-in-btn-pass {
-  margin-top: 10px;
-  border: none;
-  background-color: transparent;
-  color: black;
-  cursor: pointer;
-  padding: 8px 16px;
-  text-align: right;
-  display: inline-block;
-  font-size: 14px;
-  margin: 8px 2px 2px 280px;
-  border-radius: 5px;
-  text-decoration: underline;
-  font-size: 13px;
-}
-
-.log-in-btn-register {
-  margin-top: 10px;
-  border: none;
-  background-color: transparent;
-  color: black;
-  cursor: pointer;
-  padding: 8px 16px;
-  text-align: right;
-  display: inline-block;
-  font-size: 14px;
-  margin: 2px 2px 2px 310px;
-  border-radius: 5px;
-  text-decoration: underline;
-  font-size: 13px;
-}
-
-.login-title {
-  font-family: 'Roboto', sans-serif;
-  font-weight: 700;
-  font-size: 35px;
-  color: black;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
+@media (max-width: 600px) {
+  .form-group {
+    width: 100%;
+  }
+  
+  .button-group {
+    flex-direction: column;
+  }
+  
+  .log-in-btn-pass,
+  .log-in-btn-register,
+  .log-in-btn-enter {
+    width: 100%;
+  }
 }
