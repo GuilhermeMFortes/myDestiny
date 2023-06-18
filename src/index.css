@@ -4,9 +4,10 @@
   font-weight: 400;
 
 
-  color: gray;
+  background: linear-gradient(#007bff, #ffffff);
+  background-attachment: fixed;
   background-color: #d3dbd9;
-
+  
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
