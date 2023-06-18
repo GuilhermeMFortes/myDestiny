@@ -16,11 +16,11 @@ function Login(props) {
   };
 
   const handleRecSenha = (event) => {
-    navigate("/RecuperarSenha")
+    navigate("/RecuperarSenha");
   };
 
   const handleRegister = (event) => {
-    navigate("/Cadastro")
+    navigate("/Cadastro");
   };
 
   const handleSubmit = (event) => {
@@ -30,8 +30,8 @@ function Login(props) {
   };
 
   return (
-    <div>
-      <div className="login-title">Login</div>
+    <div className="login-container">
+      <div className="login-title">Bem vindo(a)!</div>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="email">Email</label>
@@ -54,15 +54,17 @@ function Login(props) {
           />
         </div>
 
-        <button className="log-in-btn-pass" onClick={handleRecSenha}>
-          Recuperar senha
-        </button>
-        <button className="log-in-btn-register" onClick={handleRegister}>
-          Cadastre-se
-        </button>
-        <button className="log-in-btn-enter" onClick={handleSubmit}>
-          Entrar
-        </button>
+        <div className="button-group">
+          <button className="log-in-btn-pass" onClick={handleRecSenha}>
+            Recuperar senha
+          </button>
+          <button className="log-in-btn-register" onClick={handleRegister}>
+            Cadastre-se
+          </button>
+          <button className="log-in-btn-enter" onClick={handleSubmit}>
+            Entrar
+          </button>
+        </div>
       </form>
     </div>
   );

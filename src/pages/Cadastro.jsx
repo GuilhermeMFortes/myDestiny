@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import '../Styles/Cadastro.css'
+import '../Styles/Cadastro.css';
 import { useNavigate } from 'react-router-dom';
 
 function Cadastro(props) {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
@@ -21,7 +21,7 @@ function Cadastro(props) {
   };
 
   const handleLogin = (event) => {
-    navigate("/Login")
+    navigate("/Login");
   };
 
   const handleSubmit = (event) => {
@@ -33,30 +33,33 @@ function Cadastro(props) {
   };
 
   return (
-    <div className='body'>
-    <div className='register-title'>Cadastro</div>
-    <div>
-       <form onSubmit={handleSubmit}>
-    <div className='form-group'>        
-      <label htmlFor="nome">Nome:</label>
-      <input type="text" placeholder='digite seu nome' id="nome" value={nome} onChange={handleNomeChange} />
-    </div>    
-    <div className='form-group'>
-        <label htmlFor="email">E-mail:</label>
-        <input type="email" placeholder='example@email.com' id="email" value={email} onChange={handleEmailChange} />
-    </div>
-    <div  className='form-group'>
-        <label htmlFor="senha">Senha:</label>
-        <input type="password" placeholder='digite sua senha' id="senha" value={senha} onChange={handleSenhaChange} />
-    </div>
+    <div className="body">
+      <div className="register-title">Cadastro</div>
+      <div>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="nome">Nome:</label>
+            <input type="text" placeholder="digite seu nome" id="nome" value={nome} onChange={handleNomeChange} />
+          </div>
+          <div className="form-group">
+            <label htmlFor="email">E-mail:</label>
+            <input type="email" placeholder="example@email.com" id="email" value={email} onChange={handleEmailChange} />
+          </div>
+          <div className="form-group">
+            <label htmlFor="senha">Senha:</label>
+            <input type="password" placeholder="digite sua senha" id="senha" value={senha} onChange={handleSenhaChange} />
+          </div>
         </form>
-    </div>
+      </div>
 
-    <div>
-        <button className='btn-cadastrar' onClick={handleLogin}>Cadastrar</button>
-        <button className="btn-voltar" onClick={handleLogin}>Voltar</button>
-    </div>
-
+      <div className="button-group">
+        <button className="btn-cadastrar" onClick={handleLogin}>
+          Cadastrar
+        </button>
+        <button className="btn-voltar" onClick={handleLogin}>
+          Voltar
+        </button>
+      </div>
     </div>
   );
 }
