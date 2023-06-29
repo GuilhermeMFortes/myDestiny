@@ -1,16 +1,7 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  font-family: sans-serif;
+}
 
-
-  background: linear-gradient(#007bff, #ffffff);
-  background-attachment: fixed;
-  background-color: #d3dbd9;
-  
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
+body.dark-mode {
+  background-color: #141414;
 }
