@@ -7,7 +7,8 @@ import RecuperarSenha from "./pages/RecuperarSenha";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Erro from "./pages/Erro";
-
+import MeusPacotes from "./pages/MeusPacotes";
+import Pagamento from "./pages/Pagamento";
 
 function App() {
   const [logado, setLogado] = useState(false);
@@ -46,6 +47,7 @@ function App() {
             )
           }
         />
+        <Route path="/pagamento" element={<Pagamento />} />
         <Route path="/*" element={<Erro />} />
       </Routes>
       <Footer />

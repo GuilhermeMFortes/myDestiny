@@ -1,0 +1,170 @@
+.pagamento-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .pagamento-form {
+    width: 550px;
+    padding: 25px;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .pagamento-title {
+    text-align: center;
+    font-size: 24px;
+    margin-top: 20px;
+  }
+  
+  .pagamento-label {
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+  
+  .pagamento-inputtext {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 16px;
+  }
+  
+  .pagamento-valor-inputtext {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 16px;
+  }
+  
+  .pagamento-select {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 16px;
+  }
+  
+  .pagamento-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 16px;
+  }
+  
+  .pagamento-btn-pagar,
+  .pagamento-btn-cancelar {
+    background-color: #023e73;
+    color: white;
+    border: none;
+    padding: 16px 32px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 30%;
+    margin-left: 10px;
+  }
+  
+  @media only screen and (max-width: 600px) {
+    .pagamento-form {
+      width: 90%;
+    }
+  
+    .pagamento-button-container {
+      flex-direction: column;
+      align-items: center;
+      margin-top: 12px;
+    }
+  
+    .pagamento-button-container button:not(:last-child) {
+      margin-bottom: 8px;
+    }
+  }
+  
+  .pagamento-inputtext-small {
+    width: 50%;
+  }
+  
+  .pagamento-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .pagamento-form {
+    width: 550px;
+    padding: 25px;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .pagamento-title {
+    text-align: center;
+    font-size: 24px;
+    margin-top: 20px;
+  }
+  
+  .pagamento-label {
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+  
+  .pagamento-inputtext {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 16px;
+  }
+  
+  .pagamento-valor-inputtext {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 16px;
+  }
+  
+  .pagamento-select {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 16px;
+  }
+  
+  .pagamento-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 16px;
+  }
+  
+  .pagamento-btn-pagar,
+  .pagamento-btn-cancelar {
+    background-color: #023e73;
+    color: white;
+    border: none;
+    padding: 16px 32px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 8px;
+  }
+  
+  .pagamento-btn-cancelar {
+    background-color: #023e73;
+  }
+  
+  .error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 4px;
+  }
+  
+  .empty-field {
+    border-color: red;
+  }
