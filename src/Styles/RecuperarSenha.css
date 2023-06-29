@@ -1,22 +1,23 @@
-label {
-  margin: 0.5rem 0;
-  color: black;
-}
-
-body {
+.recuperar-senha-container {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  margin: 0;
-  padding: 0;
+}
+
+.card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  background-color: #f1f1f1;
 }
 
 .rec-title {
   font-family: 'Roboto', sans-serif;
   font-weight: 700;
   font-size: 35px;
-  color: white;
+  color: rgb(0, 0, 0);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -24,7 +25,7 @@ body {
   padding: 25px;
 }
 
-.btn-voltar {
+.recuperar-senha-container button {
   margin-top: 10px;
   border: none;
   background-color: transparent;
@@ -36,12 +37,12 @@ body {
   font-size: 14px;
   margin: 8px 2px 2px 170px;
   border-radius: 5px;
-  text-decoration: underline;
-  font-size: 13px;
+  text-decoration: none;
 }
 
-.btn-enviar-senha {
-  background-color: #007bff;
+.recuperar-senha-container .btn-enviar-senha,
+.recuperar-senha-container .btn-voltar {
+  background-color: #023e73;
   border: none;
   color: white;
   cursor: pointer;
@@ -53,9 +54,38 @@ body {
   border-radius: 5px;
 }
 
-.form-group {
+.recuperar-senha-container .form-group {
   display: flex;
-  flex-direction: column ;
+  flex-direction: column;
   width: 100%;
   margin-bottom: 1rem;
+}
+
+.recuperar-senha-container label {
+  margin: 0.5rem 0;
+  color: black;
+}
+
+.recuperar-senha-container input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.recuperar-senha-container .button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.recuperar-senha-container .error-message {
+  color: red;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.recuperar-senha-container .success-message {
+  color: green;
+  margin-top: 10px;
+  font-size: 14px;
 }
