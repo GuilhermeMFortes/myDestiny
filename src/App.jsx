@@ -4,6 +4,7 @@ import Catalogo from './pages/CatalogoViagens';
 import Login from './pages/Login';
 import Cadastro from './pages/Cadastro';
 import RecuperarSenha from './pages/RecuperarSenha';
+import Erro from './pages/Erro';
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
         }
         <Route path="/Cadastro" element={<Cadastro />} />
         <Route path="/RecuperarSenha" element={<RecuperarSenha />} />
+        <Route path='/*' element={<Erro />} />
       </Routes>
     </BrowserRouter>
   )
