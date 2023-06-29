@@ -1,60 +1,197 @@
-import React, { useState } from 'react';
-import '../Styles/CatalogoViagens.css';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import DatePicker from "react-datepicker";
+import "../Styles/CatalogoViagens.css";
+import "react-datepicker/dist/react-datepicker.css";
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+  updateDoc,
+  doc as docRef,
+} from "firebase/firestore";
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
+import { db } from "../firebase";
+import { useNavigate } from "react-router-dom";
 
-const DESTINOS = [
-  {
-    id: 1,
-    nome: 'Praia do Rosa',
-    descricao: 'Lugar paradisíaco para relaxar e curtir o mar',
-    preco: 1000,
-    imagem: 'https://th.bing.com/th/id/OIP.ufzRgn_XU938LrGgnKJJ-QHaE7?pid=ImgDet&rs=1https://th.bing.com/th/id/OIP.ufzRgn_XU938LrGgnKJJ-QHaE7?pid=ImgDet&rs=1'
-  },
-  {
-    id: 2,
-    nome: 'Canela',
-    descricao: 'Cidade encantadora com belas paisagens naturais',
-    preco: 800,
-    imagem: 'https://i1.wp.com/www.destinosimperdiveis.com.br/wp-content/uploads/2019/06/di_catedral_de_pedra01.jpg?resize=1194%2C896'
-  },
-  {
-    id: 3,
-    nome: 'Buenos Aires',
-    descricao: 'Capital argentina com muita história e cultura',
-    preco: 1200,
-    imagem: 'https://th.bing.com/th/id/R.4f39bcd4e4e1b363d0d7b9169776091b?rik=lr0xsBRfOXVsdg&pid=ImgRaw&r=0'
-  },
-  {
-    id: 4,
-    nome: 'Santiago',
-    descricao: 'Capital chilena com muitos atrativos turísticos',
-    preco: 1500,
-    imagem: 'https://th.bing.com/th/id/R.d6b76a90877a13d6a13d86075e302025?rik=oO1V%2fBBbMgLNOg&pid=ImgRaw&r=0'
-  }
-];
+function CatalogoViagens() {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [numQuartos, setNumQuartos] = useState(1);
+  const [numHospedes, setNumHospedes] = useState(1);
+  const [imageUrls, setImageUrls] = useState([]);
+  const [users, setUsers] = useState([]);
+  const storage = getStorage();
+  const navigate = useNavigate();
 
-function CatalogoViagens(props) {
-  const [destinos] = useState(DESTINOS);
-  const navigate = useNavigate()
-  function handleClick(event) {
-    props.onLogout(event)
-    navigate('/login')
-  }
+  useEffect(() => {
+    const getPacotesData = async () => {
+      try {
+        const pacotesCollectionRef = collection(db, "pacotes");
+        const pacotesData = await getDocs(pacotesCollectionRef);
+        const pacotes = pacotesData.docs.map((doc) => {
+          return { id: doc.id, ...doc.data() };
+        });
+        setUsers(pacotes);
+      } catch (error) {
+        console.error("Erro ao buscar os pacotes:", error);
+      }
+    };
+
+    const getImageUrls = async () => {
+      try {
+        const imagens = [
+          "buenos-aires.jpg",
+          "canela.jpg",
+          "santiago.jpg",
+          "praia-do-rosa.jpg",
+        ];
+        const urls = await Promise.all(
+          imagens.map(async (imagem) => {
+            const imagemRef = ref(storage, `imagem/${imagem}`);
+            return await getDownloadURL(imagemRef);
+          })
+        );
+
+        setImageUrls(urls);
+      } catch (error) {
+        console.error("Erro ao buscar as imagens:", error);
+      }
+    };
+
+    getPacotesData();
+    getImageUrls();
+  }, []);
+
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
+
+  const handleNumQuartosChange = (event) => {
+    setNumQuartos(event.target.value);
+  };
+
+  const handleNumHospedesChange = (event) => {
+    setNumHospedes(event.target.value);
+  };
+
+  const handleSearchSubmit = async () => {
+    try {
+      const pacotesCollectionRef = collection(db, "pacotes");
+      let q;
+      if (searchTerm === "") {
+        q = query(pacotesCollectionRef);
+      } else {
+        q = query(
+          pacotesCollectionRef,
+          where("keywords", "array-contains", searchTerm)
+        );
+      }
+      const pacotesData = await getDocs(q);
+      const pacotes = pacotesData.docs.map((doc) => {
+        return { id: doc.id, ...doc.data() };
+      });
+      setUsers(pacotes);
+    } catch (error) {
+      console.error("Erro ao buscar os pacotes:", error);
+    }
+  };
+
+  const handleBuyPackage = async (id) => {
+    try {
+      // Redirecionar para a página de pagamento com o ID da compra como parâmetro na URL
+      navigate(`/pagamento?compraId=${id}`);
+    } catch (error) {
+      console.error("Erro ao comprar o pacote:", error);
+    }
+  };
+
+  const updateKeywords = async () => {
+    try {
+      const pacotesCollectionRef = collection(db, "pacotes");
+      const pacotesData = await getDocs(pacotesCollectionRef);
+      pacotesData.docs.forEach(async (doc) => {
+        const data = doc.data();
+        const nome = data.Nome;
+        const keywords = nome.split(" ");
+        await updateDoc(docRef(db, "pacotes", doc.id), {
+          keywords: keywords,
+        });
+      });
+    } catch (error) {
+      console.error("Erro ao atualizar as palavras-chave:", error);
+    }
+  };
+
+  useEffect(() => {
+    updateKeywords();
+  }, []);
 
   return (
-    <div>
-    <div>
-    <div className='logout-container'><button className='logout-button' onClick={handleClick}>Sair</button></div>
-      <div className='catalogo-title'>Catalogo de Viagens</div>
+    <div className="container border-catalogo">
+      <div className="catalogo-title">Catálogo de Viagens</div>
+      <div className="search-container">
+        <input
+          className="search-input"
+          type="text"
+          placeholder="Vai para onde?"
+          value={searchTerm}
+          onChange={handleSearch}
+        />
+        <DatePicker
+          selected={selectedDate}
+          onChange={handleDateChange}
+          placeholderText="Selecione a data"
+          dateFormat="dd/MM/yyyy"
+          className="datepicker-input"
+        />
+        <select
+          value={numQuartos}
+          onChange={handleNumQuartosChange}
+          className="select-input"
+        >
+          <option value={1}>1 quarto</option>
+          <option value={2}>2 quartos</option>
+          <option value={3}>3 quartos</option>
+        </select>
+        <select
+          value={numHospedes}
+          onChange={handleNumHospedesChange}
+          className="select-input"
+        >
+          <option value={1}>1 hóspede</option>
+          <option value={2}>2 hóspedes</option>
+          <option value={3}>3 hóspedes</option>
+        </select>
+        <button
+          className="search-button"
+          onClick={handleSearchSubmit}
+          style={{ backgroundColor: "#023e73" }}
+        >
+          Pesquisar
+        </button>
       </div>
       <div className="destinos-container">
-        {destinos.map((destino) => (
-          <div className="destino-card" key={destino.id}>
-            <img className="destino-card-img" src={destino.imagem} alt={destino.nome} />
-            <h2 className="destino-card-title">{destino.nome}</h2>
-            <p className="destino-card-desc">{destino.descricao}</p>
-            <p className="destino-card-price">Preço: R$ {destino.preco}</p>
-            <button className="destino-card-btn">Comprar</button>
+        {users.map((user, index) => (
+          <div className="destino-card" key={user.id}>
+            <img
+              className="destino-card-img"
+              src={imageUrls[index]}
+              alt={`Imagem ${index}`}
+            />
+            <h2 className="destino-card-title">Nome: {user.Nome}</h2>
+            <p className="destino-card-desc">Descrição: {user.Descricao}</p>
+            <p className="destino-card-price">Preço: R$ {user.Preco}</p>
+            <button
+              className="destino-card-btn"
+              onClick={() => handleBuyPackage(user.id)}
+            >
+              Comprar
+            </button>
           </div>
         ))}
       </div>
