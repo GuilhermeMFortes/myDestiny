@@ -39,6 +39,7 @@ function App() {
           element={
             logado ? (
               <UserContext.Provider value={userEmail}>
+                <MeusPacotes userId={localId} />
               </UserContext.Provider>
             ) : (
               <Login onLogin={handleLogin} />
