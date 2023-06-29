@@ -1,8 +1,38 @@
-form {
+.cadastro-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.cadastro-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 1rem;
+  padding: 40px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #f1f1f1;
+  max-width: 400px; /* Tamanho máximo do card */
+  margin: 0 auto; /* Centralizar o card na tela */
+  box-sizing: border-box; /* Incluir padding e borda no tamanho total */
+}
+
+.cadastro-title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.form-group {
+  width: 100%;
+  margin-bottom: 20px;
 }
 
 label {
@@ -10,65 +40,65 @@ label {
   color: black;
 }
 
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-  padding: 0;
-}
-
-.register-title {
-  font-family: 'Roboto', sans-serif;
-  font-weight: 700;
-  font-size: 35px;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-}
-
-.form-group {
-  margin-bottom: 20px;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-.form-group input[type="text"],
-.form-group input[type="email"],
-.form-group input[type="password"] {
+input[type="email"],
+input[type="password"] {
   width: 100%;
-  padding: 10px 30px;
+  padding: 15px;
   font-size: 16px;
   border-radius: 5px;
   border: 1px solid #ccc;
   box-sizing: border-box;
 }
 
+.button-group {
+  display: flex;
+  justify-content: space-between;
+}
+
 .btn-cadastrar {
-  background-color: #007bff;
+  background-color: #023e73;
   border: none;
   color: white;
   cursor: pointer;
   padding: 10px 20px;
-  text-align: center;
-  display: inline-block;
   font-size: 15px;
-  margin: 20px 10px;
   border-radius: 5px;
 }
 
 .btn-voltar {
-  font-size: 1.2rem;
-  border-radius: 0.5rem;
+  background-color: #023e73;
   border: none;
-  color: black;
+  color: white;
   cursor: pointer;
+  padding: 10px 30px;
+  font-size: 15px;
+  border-radius: 5px;
+}
+
+.btn-recuperar-senha {
+  font-size: 14px;
+  color: #007bff;
   background-color: transparent;
-  text-decoration: underline;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+  font-size: 14px;
+  height: 20px;
+}
+
+@media (max-width: 600px) {
+  .form-group {
+    margin-bottom: 10px;
+  }
+
+  .btn-cadastrar,
+  .btn-voltar {
+    width: 100%;
+    margin: 10px 0;
+  }
 }
