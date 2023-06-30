@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { collection, addDoc, doc, getDoc, query, where, getDocs } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  doc,
+  getDoc,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
 import { db } from "../firebase";
 import "../Styles/Pagamento.css";
 import toastr from "toastr";
@@ -13,7 +21,7 @@ const Pagamento = () => {
     numeroCartao: "",
     dataValidade: "",
     codigoSeguranca: "",
-    email: ""
+    email: "",
   });
   const location = useLocation();
   const navigate = useNavigate();
@@ -51,7 +59,7 @@ const Pagamento = () => {
       numeroCartao,
       dataValidade,
       codigoSeguranca,
-      email
+      email,
     } = formValues;
 
     if (!valor || Number(valor) <= 0) {
@@ -65,24 +73,24 @@ const Pagamento = () => {
     }
 
     if (metodoPagamento === "cartaoCredito") {
-      if (!numeroCartao) {
-        toastr.warning("Preencha o número do cartão.");
+      if (!numeroCartao || !isValidCardNumber(numeroCartao)) {
+        toastr.warning("Insira um número de cartão válido.");
         return;
       }
 
-      if (!dataValidade) {
-        toastr.warning("Preencha a data de validade.");
+      if (!dataValidade || !isValidExpirationDate(dataValidade)) {
+        toastr.warning("Insira uma data de validade válida.");
         return;
       }
 
-      if (!codigoSeguranca) {
-        toastr.warning("Preencha o código de segurança.");
+      if (!codigoSeguranca || !isValidSecurityCode(codigoSeguranca)) {
+        toastr.warning("Insira um código de segurança válido.");
         return;
       }
     }
 
-    if (!email) {
-      toastr.warning("Preencha o e-mail.");
+    if (!email || !isValidEmail(email)) {
+      toastr.warning("Insira um endereço de email válido.");
       return;
     }
 
@@ -104,15 +112,16 @@ const Pagamento = () => {
         console.log("Esse pacote já foi adquirido pelo usuário.");
         return;
       }
+
       const pagamento = {
         valor: Number(valor),
         metodoDePagamento: {
           codigo: 1,
           numero: numeroCartao,
-          validade: dataValidade
+          validade: dataValidade,
         },
         pacoteId: pacoteId,
-        email: email
+        email: email,
       };
 
       const docRef = await addDoc(collection(db, "pagamentos"), pagamento);
@@ -124,7 +133,7 @@ const Pagamento = () => {
         numeroCartao: "",
         dataValidade: "",
         codigoSeguranca: "",
-        email: ""
+        email: "",
       });
 
       toastr.success("Pagamento realizado com sucesso!");
@@ -144,7 +153,7 @@ const Pagamento = () => {
       numeroCartao: "",
       dataValidade: "",
       codigoSeguranca: "",
-      email: ""
+      email: "",
     });
 
     navigate("/");
@@ -178,6 +187,27 @@ const Pagamento = () => {
 
   const isFieldEmpty = (fieldName) => {
     return formValues[fieldName].trim() === "";
+  };
+
+  const isValidCardNumber = (cardNumber) => {
+    // Implemente a validação real do número do cartão
+    return /^[0-9]{16}$/.test(cardNumber);
+  };
+
+  const isValidExpirationDate = (expirationDate) => {
+    // Implemente a validação real da data de validade
+    // Exemplo: verificar se a data é maior que a data atual
+    return /^(\d{2})\/(\d{2})$/.test(expirationDate);
+  };
+
+  const isValidSecurityCode = (securityCode) => {
+    // Implemente a validação real do código de segurança
+    return /^[0-9]{3}$/.test(securityCode);
+  };
+
+  const isValidEmail = (email) => {
+    // Implemente a validação real do email
+    return /\S+@\S+\.\S+/.test(email);
   };
 
   return (
@@ -228,6 +258,10 @@ const Pagamento = () => {
                   {isFieldEmpty("numeroCartao") && (
                     <p className="error-message">Campo obrigatório</p>
                   )}
+                  {!isFieldEmpty("numeroCartao") &&
+                    !isValidCardNumber(formValues.numeroCartao) && (
+                      <p className="error-message">Número de cartão inválido</p>
+                    )}
                 </div>
                 <div className="cartao-credito-input">
                   <label htmlFor="dataValidade" className="pagamento-label">
@@ -245,6 +279,10 @@ const Pagamento = () => {
                   {isFieldEmpty("dataValidade") && (
                     <p className="error-message">Campo obrigatório</p>
                   )}
+                  {!isFieldEmpty("dataValidade") &&
+                    !isValidExpirationDate(formValues.dataValidade) && (
+                      <p className="error-message">Data de validade inválida</p>
+                    )}
                 </div>
                 <div className="cartao-credito-input">
                   <label htmlFor="codigoSeguranca" className="pagamento-label">
@@ -262,6 +300,12 @@ const Pagamento = () => {
                   {isFieldEmpty("codigoSeguranca") && (
                     <p className="error-message">Campo obrigatório</p>
                   )}
+                  {!isFieldEmpty("codigoSeguranca") &&
+                    !isValidSecurityCode(formValues.codigoSeguranca) && (
+                      <p className="error-message">
+                        Código de segurança inválido
+                      </p>
+                    )}
                 </div>
               </div>
             </>
@@ -275,13 +319,15 @@ const Pagamento = () => {
             id="email"
             value={formValues.email}
             onChange={handleEmailChange}
-            className={`pagamento-inputtext pagamento-inputtext-small empty-field ${
+            className={`pagamento-inputtext ${
               isFieldEmpty("email") ? "empty-field" : ""
             }`}
-            style={{ maxHeight: "35px" }}
           />
           {isFieldEmpty("email") && (
             <p className="error-message">Campo obrigatório</p>
+          )}
+          {!isFieldEmpty("email") && !isValidEmail(formValues.email) && (
+            <p className="error-message">E-mail inválido</p>
           )}
 
           <div className="pagamento-button-container">
