@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import DatePicker from "react-datepicker";
 import "../Styles/CatalogoViagens.css";
 import "react-datepicker/dist/react-datepicker.css";
@@ -13,6 +13,7 @@ import {
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { db } from "../firebase";
 import { useNavigate } from "react-router-dom";
+import { ThemeContext } from "../contexts/ThemeContext";
 
 function CatalogoViagens() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -23,6 +24,7 @@ function CatalogoViagens() {
   const [users, setUsers] = useState([]);
   const storage = getStorage();
   const navigate = useNavigate();
+  const { darkMode } = useContext(ThemeContext);
 
   useEffect(() => {
     const getPacotesData = async () => {
@@ -132,68 +134,55 @@ function CatalogoViagens() {
   }, []);
 
   return (
-    <div className="container border-catalogo">
-      <div className="catalogo-title">Catálogo de Viagens</div>
-      <div className="search-container">
-        <input
-          className="search-input"
-          type="text"
-          placeholder="Vai para onde?"
-          value={searchTerm}
-          onChange={handleSearch}
-        />
-        <DatePicker
-          selected={selectedDate}
-          onChange={handleDateChange}
-          placeholderText="Selecione a data"
-          dateFormat="dd/MM/yyyy"
-          className="datepicker-input"
-        />
-        <select
-          value={numQuartos}
-          onChange={handleNumQuartosChange}
-          className="select-input"
-        >
-          <option value={1}>1 quarto</option>
-          <option value={2}>2 quartos</option>
-          <option value={3}>3 quartos</option>
-        </select>
-        <select
-          value={numHospedes}
-          onChange={handleNumHospedesChange}
-          className="select-input"
-        >
-          <option value={1}>1 hóspede</option>
-          <option value={2}>2 hóspedes</option>
-          <option value={3}>3 hóspedes</option>
-        </select>
-        <button
-          className="search-button"
-          onClick={handleSearchSubmit}
-          style={{ backgroundColor: "#023e73" }}
-        >
-          Pesquisar
-        </button>
-      </div>
-      <div className="destinos-container">
-        {users.map((user, index) => (
-          <div className="destino-card" key={user.id}>
-            <img
-              className="destino-card-img"
-              src={imageUrls[index]}
-              alt={`Imagem ${index}`}
-            />
-            <h2 className="destino-card-title">Nome: {user.Nome}</h2>
-            <p className="destino-card-desc">Descrição: {user.Descricao}</p>
-            <p className="destino-card-price">Preço: R$ {user.Preco}</p>
-            <button
-              className="destino-card-btn"
-              onClick={() => handleBuyPackage(user.id)}
-            >
-              Comprar
-            </button>
-          </div>
-        ))}
+    <div className={`catalogo-container ${darkMode ? "dark-mode" : ""}`}>
+      <div className="container border-catalogo">
+        <div className="catalogo-title">Catálogo de Viagens</div>
+        <div className="search-container">
+          <input
+            className="search-input"
+            type="text"
+            placeholder="Vai para onde?"
+            value={searchTerm}
+            onChange={handleSearch}
+          />
+          <button
+            className="search-button"
+            onClick={handleSearchSubmit}
+            style={{ backgroundColor: "#023e73" }}
+          >
+            Pesquisar
+          </button>
+        </div>
+        <div className="destinos-container">
+          {users.map((user, index) => (
+            <div className="destino-card" key={user.id}>
+              <img
+                className="destino-card-img"
+                src={imageUrls[index]}
+                alt={`Imagem ${index}`}
+              />
+              <h2
+                className={`destino-card-title ${darkMode ? "dark-mode" : ""}`}
+              >
+                {user.Nome}
+              </h2>
+              <p className={`destino-card-desc ${darkMode ? "dark-mode" : ""}`}>
+                {user.Descricao}
+              </p>
+              <p
+                className={`destino-card-price ${darkMode ? "dark-mode" : ""}`}
+              >
+                Preço: R$ {user.Preco}
+              </p>
+              <button
+                className={`destino-card-btn ${darkMode ? "dark-mode" : ""}`}
+                onClick={() => handleBuyPackage(user.id)}
+              >
+                Comprar
+              </button>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -1,160 +1,167 @@
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #007bff;
-    padding: 15px;
-    width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 999;
-    margin-bottom: 20px; /* Adicione uma margem inferior */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #007bff;
+  padding: 15px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  margin-bottom: 20px; /* Adicione uma margem inferior */
+}
+
+.navbar-left {
+  flex: 1;
+}
+
+.navbar-title {
+  font-weight: bold;
+  color: #fff;
+  text-decoration: none;
+  font-size: 24px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: flex-start;
+  margin-right: 50px;
+}
+
+.logout-button {
+  padding: 12px 50px;
+  background-color: #f44336;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.logout-button:hover,
+.destino-card-btn:hover,
+.login-button:hover,
+.navbar-link:hover {
+  opacity: 0.9;
+}
+
+.destino-card-btn:hover {
+  background-color: #0056b3;
+}
+
+.logout-button:active,
+.destino-card-btn:active,
+.login-button:active,
+.navbar-link:active {
+  opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 10px 5px;
   }
-  
-  .navbar-left {
-    flex: 1;
-  }
-  
-  .navbar-title {
-    font-weight: bold;
-    color: #fff;
-    text-decoration: none;
-    font-size: 24px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-  }
-  
-  .navbar-right {
-    display: flex;
-    align-items: flex-start;
-    margin-right: 50px;
-  }
-  
+
   .logout-button {
-    padding: 12px 50px;
-    background-color: #f44336;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-right: 10px;
+    padding: 8px 15px;
   }
-  
-  .logout-button:hover,
-  .destino-card-btn:hover,
-  .login-button:hover,
-  .navbar-link:hover {
-    opacity: 0.9;
-  }
-  
-  .destino-card-btn:hover {
-    background-color: #0056b3;
-  }
-  
-  .logout-button:active,
-  .destino-card-btn:active,
-  .login-button:active,
-  .navbar-link:active {
-    opacity: 0.8;
-  }
-  
-  @media (max-width: 768px) {
-    .navbar {
-      padding: 10px 5px;
-    }
-  
-    .logout-button {
-      padding: 8px 15px;
-    }
-  }
-  
-  .logout-button {
-    padding: 12px 50px;
-    background-color: #f44336;
-    color: #fff;
-    border: none;
-    border-radius: 11px;
-    cursor: pointer;
-    margin-right: 10px;
-    text-decoration: none;
-    transition: opacity 0.2s;
-  }
-  
-  .logout-button:hover {
-    opacity: 0.9;
-  }
-  
-  .logout-button:active {
-    opacity: 0.8;
-  }
-  
-  .login-button {
-    padding: 10px 20px;
-    background-color: #023e73;
-    color: #fff;
-    border: none;
-    border-radius: 11px;
-    cursor: pointer;
-    margin-right: 5px; /* Reduzi a margem direita para 5px */
-    margin-left: 5px; /* Adicionei uma margem esquerda de 5px */
-    text-decoration: none;
-    transition: background-color 0.2s;
-  }
-  
-  .dark-mode-button {
-    padding: 10px 20px;
-    background-color: #fff;
-    color: #333;
-    border: none;
-    border-radius: 11px;
-    cursor: pointer;
-    margin-right: 10px;
-    text-decoration: none;
-    transition: background-color 0.2s;
-    font-weight: bold; /* Adicione esta linha para aumentar a espessura do texto */
-  }
-  
-  .dark-mode-button.dark-mode-active {
-    background-color: #333;
-    color: #fff;
-  }
-  
-  .dark-mode-button:hover {
-    background-color: #f2f2f2;
-  }
-  
-  .dark-mode-button:active {
-    opacity: 0.8;
-  }
-  
-  .login-button:hover {
-    background-color: #007bff;
-  }
-  
-  .login-button:active {
-    opacity: 0.8;
-  }
-  
-  .navbar-link {
-    padding: 10px 20px;
-    background-color: #023e73;
-    color: #fff;
-    border: none;
-    border-radius: 11px;
-    cursor: pointer;
-    margin-right: 10px;
-    text-decoration: none;
-    transition: opacity 0.5s;
-  }
-  
-  .navbar-link:hover {
-    opacity: 0.9;
-    background-color: #007bff;
-  }
-  
-  .navbar-link:active {
-    opacity: 0.8;
-  }
-  
-  
+}
+
+.logout-button {
+  padding: 12px 50px;
+  background-color: #f44336;
+  color: #fff;
+  border: none;
+  border-radius: 11px;
+  cursor: pointer;
+  margin-right: 10px;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.logout-button:hover {
+  opacity: 0.9;
+}
+
+.logout-button:active {
+  opacity: 0.8;
+}
+
+.login-button {
+  padding: 10px 20px;
+  background-color: #023e73;
+  color: #fff;
+  border: none;
+  border-radius: 11px;
+  cursor: pointer;
+  margin-right: 5px; /* Reduzi a margem direita para 5px */
+  margin-left: 5px; /* Adicionei uma margem esquerda de 5px */
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.dark-mode-button {
+  padding: 10px 20px;
+  background-color: #fff;
+  color: #333;
+  border: none;
+  border-radius: 11px;
+  cursor: pointer;
+  margin-right: 10px;
+  text-decoration: none;
+  transition: background-color 0.2s;
+  font-weight: bold; /* Adicione esta linha para aumentar a espessura do texto */
+}
+
+.dark-mode-button.dark-mode-active {
+  background-color: #333;
+  color: #fff;
+}
+
+.dark-mode-button:hover {
+  background-color: #007bff;
+}
+
+.dark-mode-button:active {
+  opacity: 0.8;
+}
+
+.login-button:hover {
+  background-color: #007bff;
+}
+
+.login-button:active {
+  opacity: 0.8;
+}
+
+.navbar-link {
+  padding: 10px 20px;
+  background-color: #023e73;
+  color: #fff;
+  border: none;
+  border-radius: 11px;
+  cursor: pointer;
+  margin-right: 10px;
+  text-decoration: none;
+  transition: opacity 0.5s;
+  margin-left: 15px;
+}
+
+
+.login-button {
+  /* Remova padding: 10px 20px; */
+  padding: 10px;
+  /* Restante do código... */
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-right .dark-mode-button {
+  margin-right: 0;
+}

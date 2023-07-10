@@ -1,4 +1,4 @@
-.recuperar-senha-container {
+.recuperar-senha-body {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -6,7 +6,6 @@
 }
 
 .card {
-  background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 20px;
@@ -14,7 +13,7 @@
 }
 
 .rec-title {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-weight: 700;
   font-size: 35px;
   color: rgb(0, 0, 0);
@@ -41,7 +40,7 @@
 }
 
 .recuperar-senha-container .btn-enviar-senha,
-.recuperar-senha-container .btn-voltar {
+.recuperar-senha-container  {
   background-color: #023e73;
   border: none;
   color: white;
@@ -66,11 +65,6 @@
   color: black;
 }
 
-.recuperar-senha-container input {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
 
 .recuperar-senha-container .button-group {
   display: flex;
@@ -88,4 +82,35 @@
   color: green;
   margin-top: 10px;
   font-size: 14px;
+}
+
+.dark-mode .input::placeholder {
+  color: #fff;
+}
+
+.dark-mode-element .btn-enviar-senha,
+.dark-mode-element .btn-voltar {
+  color: #fff;
+}
+
+.dark-mode .recuperar-senha-container {
+  background-color: #222;
+}
+
+.btn-enviar-senha {
+  background-color: #023e73;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 10px 30px;
+  font-size: 15px;
+  border-radius: 5px;
+}
+
+.dark-mode .card {
+  background-color: #222;
+}
+
+.dark-mode .rec-title{
+  color: #fff;
 }

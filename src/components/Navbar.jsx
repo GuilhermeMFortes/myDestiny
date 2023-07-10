@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "../Styles/Navbar.css";
+import { ThemeContext } from "../contexts/ThemeContext";
 
 function Navbar(props) {
   const location = useLocation();
   const navigate = useNavigate();
-  const [darkMode, setDarkMode] = useState(false);
-
+  const { darkMode, setDarkMode } = useContext(ThemeContext);
+  
   const handleLogout = (event) => {
     props.onLogout(event);
     navigate("/login");
@@ -25,16 +26,6 @@ function Navbar(props) {
         </Link>
       </div>
       <div className="navbar-right">
-        {props.logado && (
-          <>
-            <Link to="/meus-pacotes" className="navbar-link">
-              Meus Pacotes
-            </Link>
-            <button className="logout-button" onClick={handleLogout}>
-              Sair
-            </button>
-          </>
-        )}
         {!props.logado &&
           location.pathname !== "/login" &&
           location.pathname !== "/recuperarsenha" &&
@@ -49,6 +40,16 @@ function Navbar(props) {
         >
           {darkMode ? "Light Mode" : "Dark Mode"}
         </button>
+        {props.logado && (
+          <>
+            <Link to="/meus-pacotes" className="navbar-link">
+              Meus Pacotes
+            </Link>
+            <button className="logout-button" onClick={handleLogout}>
+              Sair
+            </button>
+          </>
+        )}
       </div>
     </nav>
   );

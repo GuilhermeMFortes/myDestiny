@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   collection,
@@ -13,6 +13,7 @@ import { db } from "../firebase";
 import "../Styles/Pagamento.css";
 import toastr from "toastr";
 import "toastr/build/toastr.css";
+import { ThemeContext } from "../contexts/ThemeContext";
 
 const Pagamento = () => {
   const [formValues, setFormValues] = useState({
@@ -25,6 +26,7 @@ const Pagamento = () => {
   });
   const location = useLocation();
   const navigate = useNavigate();
+  const { darkMode } = useContext(ThemeContext);
 
   const handleValorChange = (event) => {
     setFormValues({ ...formValues, valor: event.target.value });
@@ -39,7 +41,17 @@ const Pagamento = () => {
   };
 
   const handleDataValidadeChange = (event) => {
-    setFormValues({ ...formValues, dataValidade: event.target.value });
+    const input = event.target.value;
+    let formattedInput = input.replace(/\D/g, "").slice(0, 8);
+
+    if (formattedInput.length > 2) {
+      formattedInput = formattedInput.replace(
+        /(\d{2})(\d{2})(\d{4})/,
+        "$1/$2/$3"
+      );
+    }
+
+    setFormValues({ ...formValues, dataValidade: formattedInput });
   };
 
   const handleCodigoSegurancaChange = (event) => {
@@ -195,9 +207,7 @@ const Pagamento = () => {
   };
 
   const isValidExpirationDate = (expirationDate) => {
-    // Implemente a validação real da data de validade
-    // Exemplo: verificar se a data é maior que a data atual
-    return /^(\d{2})\/(\d{2})$/.test(expirationDate);
+    return /^(\d{2})\/(\d{2})\/(\d{4})$/.test(expirationDate);
   };
 
   const isValidSecurityCode = (securityCode) => {
@@ -211,8 +221,8 @@ const Pagamento = () => {
   };
 
   return (
-    <div className="pagamento-container">
-      <div className="pagamento-form">
+    <div className={`pagamento-container ${darkMode ? "dark-mode" : ""}`}>
+      <div className={`pagamento-form ${darkMode ? "dark-mode" : ""}`}>
         <h2 className="pagamento-title">Pagamento</h2>
         <form onSubmit={handleSubmit}>
           <label htmlFor="valor" className="pagamento-label">
