@@ -102,3 +102,28 @@ input[type="password"] {
     margin: 10px 0;
   }
 }
+
+.cadastro-body.dark-mode {
+  background-color: #222;
+  color: #fff;
+}
+
+.cadastro-container.dark-mode-card {
+  background-color: #222;
+}
+
+.cadastro-container.dark-mode-element {
+  color: #fff;
+}
+
+/* Estilos específicos para inputs e botões */
+.cadastro-container .input.dark-mode-element {
+  background-color: #444;
+  color: #fff;
+}
+
+.cadastro-container .btn-cadastrar.dark-mode-element,
+.cadastro-container .btn-voltar.dark-mode-element {
+  background-color: #444;
+  color: #fff;
+}

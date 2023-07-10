@@ -1,28 +1,29 @@
-import React, { useState } from 'react';
-import '../Styles/Cadastro.css';
-import { useNavigate } from 'react-router-dom';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import React, { useState, useContext } from "react";
+import "../Styles/Cadastro.css";
+import { useNavigate } from "react-router-dom";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import toastr from "toastr";
 import "toastr/build/toastr.css";
+import { ThemeContext } from "../contexts/ThemeContext";
 
-function Cadastro(props) {
+function Cadastro() {
   const navigate = useNavigate();
-  const [nome, setNome] = useState('');
-  const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
-  const [erro, setErro] = useState('');
-  const [isFormInvalid, setIsFormInvalid] = useState(false); // Add isFormInvalid state
+  const [nome, setNome] = useState("");
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const [erro, setErro] = useState("");
+  const [isFormInvalid, setIsFormInvalid] = useState(false);
+  const { darkMode } = useContext(ThemeContext);
 
   const signUp = (event) => {
     event.preventDefault();
-    setIsFormInvalid(false); // Reset isFormInvalid state
-    setErro(''); // Limpar mensagem de erro ao tentar cadastrar novamente
+    setIsFormInvalid(false);
+    setErro("");
 
     if (!email || !senha) {
-      // Check if any field is empty
       setIsFormInvalid(true);
-      toastr.warning("Por favor, preencha todos os campos."); // Show toastr warning
+      toastr.warning("Por favor, preencha todos os campos.");
       return;
     }
 
@@ -34,8 +35,10 @@ function Cadastro(props) {
       .catch((error) => {
         console.log(error);
         setIsFormInvalid(true);
-        setErro('Verifique se o usuário já existe ou se os dados estão corretos.');
-        toastr.error(erro); // Show toastr error
+        setErro(
+          "Verifique se o usuário já existe ou se os dados estão corretos."
+        );
+        toastr.error(erro);
       });
   };
 
@@ -60,31 +63,60 @@ function Cadastro(props) {
   };
 
   return (
-    <div className="cadastro-body">
-      <div className="cadastro-container">
+    <div className={`cadastro-body ${darkMode ? "dark-mode" : ""}`}>
+      <div
+        className={`cadastro-container ${darkMode ? "dark-mode-card" : ""} ${
+          darkMode ? "dark-mode-element" : ""
+        }`}
+      >
         <div className="cadastro-title">Criar conta</div>
         <div className="form-container">
           <form onSubmit={signUp}>
             <div className="form-group">
-              <label htmlFor="email">E-mail:</label>
-              <input type="email" placeholder="exemplo@email.com" id="email" value={email} onChange={handleEmailChange} />
+              <input
+                type="email"
+                placeholder="exemplo@email.com"
+                id="email"
+                value={email}
+                className={`input ${darkMode ? "dark-mode-element" : ""}`}
+                onChange={handleEmailChange}
+              />
             </div>
             <div className="form-group">
-              <label htmlFor="senha">Senha:</label>
-              <input type="password" placeholder="Digite sua senha" id="senha" value={senha} onChange={handleSenhaChange} />
+              <input
+                type="password"
+                className={`input ${darkMode ? "dark-mode-element" : ""}`}
+                placeholder="Digite sua senha"
+                id="senha"
+                value={senha}
+                onChange={handleSenhaChange}
+              />
               {erro && <div className="error-message">{erro}</div>}
             </div>
             <div className="button-group">
-            <button className="btn-voltar" onClick={handleLogin}>
-                Voltar
-              </button>
-              <button className="btn-cadastrar" type="submit">
+              <button
+                className={`btn-cadastrar ${
+                  darkMode ? "dark-mode-element" : ""
+                }`}
+                type="submit"
+              >
                 Cadastrar
+              </button>
+              <button
+                className={`btn-voltar ${darkMode ? "dark-mode-element" : ""}`}
+                onClick={handleLogin}
+              >
+                Voltar
               </button>
             </div>
           </form>
           <div>
-            <button className="btn-recuperar-senha" onClick={handleEsqueceuSenha}>
+            <button
+              className={`btn-recuperar-senha ${
+                darkMode ? "dark-mode-element" : ""
+              }`}
+              onClick={handleEsqueceuSenha}
+            >
               Esqueceu a senha?
             </button>
           </div>

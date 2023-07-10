@@ -14,6 +14,7 @@
   flex-wrap: wrap;
   justify-content: center;
 }
+
 .destino-card {
   border-radius: 4px;
   width: 300px;
@@ -22,6 +23,27 @@
   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
   background-color: #f5f5f5;
   text-align: center;
+}
+
+.destino-card.dark-mode .destino-card-title,
+.destino-card.dark-mode .destino-card-desc,
+.destino-card.dark-mode .destino-card-price {
+  color: white;
+}
+
+.dark-mode .navbar {
+  background-color: #222222;
+  color: white;
+}
+
+.dark-mode .footer {
+  background-color: #222222;
+  color: white;
+}
+
+.destino-card.dark-mode {
+  background-color: #222222;
+  color: white;
 }
 
 .destino-card-img {
@@ -74,7 +96,6 @@
   transition: background-color 0.2s;
   font-size: 16px;
   font-weight: bold;
-
 }
 
 .destino-card-btn:hover {
@@ -88,7 +109,7 @@
   max-width: 600px;
   margin: 60px auto;
   border-radius: 10px;
-  padding: 8px 200px;
+  padding: 8px 20px;
   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
 }
 
@@ -213,4 +234,15 @@
   align-items: center;
   max-width: 400px;
   margin: 0 auto;
+}
+
+.dark-mode .destino-card {
+  background-color: #222222;
+  color: white;
+}
+
+.catalogo-container.dark-mode .destino-card .destino-card-title,
+.catalogo-container.dark-mode .destino-card .destino-card-desc,
+.catalogo-container.dark-mode .destino-card .destino-card-price {
+  color: white;
 }

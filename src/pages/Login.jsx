@@ -5,6 +5,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import "../Styles/Login.css";
 import toastr from "toastr";
 import "toastr/build/toastr.css";
+import { ThemeContext } from "../contexts/ThemeContext";
 
 export const UserContext = React.createContext();
 
@@ -15,6 +16,7 @@ function Login(props) {
   const [isFormInvalid, setIsFormInvalid] = useState(false); // Add isFormInvalid state
   const navigate = useNavigate();
   const [userEmail, setUserEmail] = useState("");
+  const { darkMode } = useContext(ThemeContext);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -34,13 +36,10 @@ function Login(props) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setIsFormInvalid(false); // Reset isFormInvalid state
     setErrorMessage("");
 
     if (!email || !password) {
-      // Check if any field is empty
-      setIsFormInvalid(true);
-      toastr.warning("Por favor, preencha todos os campos."); // Show toastr warning
+      toastr.warning("Por favor, preencha todos os campos.");
       return;
     }
 
@@ -54,57 +53,68 @@ function Login(props) {
       props.onLogin(userCredential.user.uid, userCredential.user.email);
       navigate("/");
     } catch (error) {
-      setIsFormInvalid(true);
-      setErrorMessage("Ocorreu um erro ao fazer login. Verifique suas credenciais.");
-      toastr.error(errorMessage); // Show toastr error
+      const errorMessage =
+        "Ocorreu um erro ao fazer login. Verifique suas credenciais.";
+      setErrorMessage(errorMessage);
+      toastr.error(errorMessage);
     }
   };
 
   return (
     <UserContext.Provider value={userEmail}>
-      <div className="login-body">
+      <div className={`login-body ${darkMode ? "dark-mode" : ""}`}>
         <div className="login-container">
           <div className="login-title">Bem-vindo(a)!</div>
           <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="email">Email</label>
+            <div
+              className={`form-group ${darkMode ? "dark-mode-element" : ""}`}
+            >
               <input
                 type="email"
                 placeholder="example@gmail.com"
                 id="email"
                 value={email}
                 onChange={handleEmailChange}
-                className="input"
+                className={`input ${darkMode ? "dark-mode-element" : ""}`}
               />
             </div>
-            <div className="form-group">
-              <label htmlFor="password">Senha</label>
+            <div
+              className={`form-group ${darkMode ? "dark-mode-element" : ""}`}
+            >
               <input
                 type="password"
                 placeholder="Digite sua senha"
                 id="password"
                 value={password}
                 onChange={handlePasswordChange}
-                className="input"
+                className={`input ${darkMode ? "dark-mode-element" : ""}`}
               />
             </div>
-
             <div className="button-group">
               <button
                 type="button"
-                className="log-in-btn pass"
+                className={`log-in-btn pass ${
+                  darkMode ? "dark-mode-element" : ""
+                }`}
                 onClick={handleRecSenha}
               >
                 Recuperar senha
               </button>
               <button
                 type="button"
-                className="log-in-btn register"
+                className={`log-in-btn register ${
+                  darkMode ? "dark-mode-element" : ""
+                }`}
                 onClick={handleRegister}
               >
                 Cadastre-se
               </button>
-              <button type="submit" className="log-in-btn enter">
+              <button
+                type="submit"
+                className={`log-in-btn enter ${
+                  darkMode ? "dark-mode-element" : ""
+                }`}
+              >
                 Entrar
               </button>
             </div>

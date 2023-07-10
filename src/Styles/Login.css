@@ -43,6 +43,28 @@
   margin-top: 15px;
 }
 
+.dark-mode .login-container {
+  background-color: #222;
+}
+
+.dark-mode .input {
+  background-color: #222;
+  color: #fff;
+}
+
+.dark-mode .login-title {
+  color: #ffffff;
+}
+
+.dark-mode .log-in-btn {
+  color: #fff;
+}
+
+.dark-mode .login-title {
+  color: #fff;
+}
+
+
 .log-in-btn {
   padding: 10px 20px;
   background-color: transparent;

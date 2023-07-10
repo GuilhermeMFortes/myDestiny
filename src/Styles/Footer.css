@@ -1,63 +1,62 @@
 .footer {
-    background-color: #007bff;
-    padding: 15px;
-    width: 100%;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    z-index: 999;
-    margin-top: 20px; /* Adicione uma margem superior */
-  }
-  
-  .footer-content {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    align-items: center;
-    text-align: center;
-  }
-  
-  .footer-text {
-    color: #fff; /* Alterado para branco */
-    font-size: 14px;
-    font-weight: bold;
-    margin-right: 20px;
-    margin-bottom: 10px;
-  }
-  
+  background-color: #007bff;
+  padding: 15px;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+  margin-top: 20px; /* Adicione uma margem superior */
+}
+
+.footer-content {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  text-align: center;
+}
+
+.footer-text {
+  color: #fff; /* Alterado para branco */
+  font-size: 14px;
+  font-weight: bold;
+  margin-right: 20px;
+  margin-bottom: 10px;
+}
+
+.footer-link {
+  color: #fff; /* Alterado para branco */
+  font-size: 14px;
+  font-weight: bold;
+  text-decoration: none;
+  margin-right: 20px;
+  margin-bottom: 10px;
+}
+
+.footer-link:hover {
+  opacity: 0.9;
+  color: #ccc; /* Alterado para cinza claro ao passar o mouse */
+}
+
+.footer-text::after {
+  content: "•";
+  margin-left: 20px;
+  margin-right: 20px;
+  color: #ccc;
+}
+
+.footer-text:last-child::after {
+  content: "";
+}
+
+@media (max-width: 768px) {
   .footer-link {
-    color: #fff; /* Alterado para branco */
-    font-size: 14px;
-    font-weight: bold;
-    text-decoration: none;
-    margin-right: 20px;
-    margin-bottom: 10px;
+    margin-right: 10px;
   }
-  
-  .footer-link:hover {
-    opacity: 0.9;
-    color: #ccc; /* Alterado para cinza claro ao passar o mouse */
-  }
-  
+
   .footer-text::after {
-    content: "•";
-    margin-left: 20px;
-    margin-right: 20px;
-    color: #ccc;
+    margin-left: 10px;
+    margin-right: 10px;
   }
-  
-  .footer-text:last-child::after {
-    content: "";
-  }
-  
-  @media (max-width: 768px) {
-    .footer-link {
-      margin-right: 10px;
-    }
-  
-    .footer-text::after {
-      margin-left: 10px;
-      margin-right: 10px;
-    }
-  }
-  
+}
