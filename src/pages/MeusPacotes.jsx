@@ -1,14 +1,22 @@
 import React, { useEffect, useState, useContext } from "react";
-import { collection, getDocs, query, where, doc, getDoc } from "firebase/firestore";
+import { format } from "date-fns";
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+  doc,
+  getDoc,
+} from "firebase/firestore";
 import { db } from "../firebase";
-import { UserContext } from "./Login";
+import { LoginContext } from "../contexts/LoginContext";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import "../Styles/MeusPacotes.css";
 
 function MyPackagesPage() {
   const [pacotesComprados, setPacotesComprados] = useState([]);
   const [imageUrls, setImageUrls] = useState([]);
-  const userEmail = useContext(UserContext);
+  const { user } = useContext(LoginContext); // Acessar o valor 'user' do contexto
   const storage = getStorage();
 
   useEffect(() => {
@@ -18,7 +26,7 @@ function MyPackagesPage() {
 
         const q = query(
           pacotesCompradosCollectionRef,
-          where("email", "==", userEmail)
+          where("email", "==", user.email) // Acessar a propriedade 'email' do usuário
         );
         const pacotesCompradosData = await getDocs(q);
         const pacotesComprados = [];
@@ -61,7 +69,7 @@ function MyPackagesPage() {
 
     getPacotesComprados();
     getImageUrls();
-  }, [userEmail, storage]);
+  }, [user, storage]);
 
   return (
     <div className="meus-pacotes-container">
@@ -89,6 +97,13 @@ function MyPackagesPage() {
                     <h3 className="destino-title">{pacote.Nome}</h3>
                     <p className="destino-description">{pacote.Descricao}</p>
                     <p className="destino-preco">Preço: R$ {pacote.Preco}</p>
+                    <p className="destino-date">
+                      Data:{" "}
+                      {format(
+                        new Date(pacote.DataViagem.seconds * 1000),
+                        "dd/MM/yyyy"
+                      )}
+                    </p>
                   </div>
                 </div>
               ))}
