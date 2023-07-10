@@ -1,19 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import {
-  collection,
-  addDoc,
-  doc,
-  getDoc,
-  query,
-  where,
-  getDocs,
-} from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
+import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
 import "../Styles/Pagamento.css";
 import toastr from "toastr";
 import "toastr/build/toastr.css";
 import { ThemeContext } from "../contexts/ThemeContext";
+import { LoginContext } from "../contexts/LoginContext";
 
 const Pagamento = () => {
   const [formValues, setFormValues] = useState({
@@ -22,11 +16,11 @@ const Pagamento = () => {
     numeroCartao: "",
     dataValidade: "",
     codigoSeguranca: "",
-    email: "",
   });
   const location = useLocation();
   const navigate = useNavigate();
   const { darkMode } = useContext(ThemeContext);
+  const { user } = useContext(LoginContext);
 
   const handleValorChange = (event) => {
     setFormValues({ ...formValues, valor: event.target.value });
@@ -58,10 +52,6 @@ const Pagamento = () => {
     setFormValues({ ...formValues, codigoSeguranca: event.target.value });
   };
 
-  const handleEmailChange = (event) => {
-    setFormValues({ ...formValues, email: event.target.value });
-  };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -71,7 +61,6 @@ const Pagamento = () => {
       numeroCartao,
       dataValidade,
       codigoSeguranca,
-      email,
     } = formValues;
 
     if (!valor || Number(valor) <= 0) {
@@ -101,21 +90,15 @@ const Pagamento = () => {
       }
     }
 
-    if (!email || !isValidEmail(email)) {
-      toastr.warning("Insira um endereço de email válido.");
-      return;
-    }
-
     try {
       const pacoteId = getPacoteIdFromURL();
-      const email = formValues.email;
 
       // Verificar se o usuário já possui o pacote com o ID especificado
       const pagamentosRef = collection(db, "pagamentos");
       const q = query(
         pagamentosRef,
         where("pacoteId", "==", pacoteId),
-        where("email", "==", email)
+        where("email", "==", user.email)
       );
       const pagamentosDocs = await getDocs(q);
 
@@ -133,7 +116,7 @@ const Pagamento = () => {
           validade: dataValidade,
         },
         pacoteId: pacoteId,
-        email: email,
+        email: user.email,
       };
 
       const docRef = await addDoc(collection(db, "pagamentos"), pagamento);
@@ -145,7 +128,6 @@ const Pagamento = () => {
         numeroCartao: "",
         dataValidade: "",
         codigoSeguranca: "",
-        email: "",
       });
 
       toastr.success("Pagamento realizado com sucesso!");
@@ -165,7 +147,6 @@ const Pagamento = () => {
       numeroCartao: "",
       dataValidade: "",
       codigoSeguranca: "",
-      email: "",
     });
 
     navigate("/");
@@ -198,7 +179,7 @@ const Pagamento = () => {
   };
 
   const isFieldEmpty = (fieldName) => {
-    return formValues[fieldName].trim() === "";
+    return (formValues[fieldName] ?? "").trim() === "";
   };
 
   const isValidCardNumber = (cardNumber) => {
@@ -213,11 +194,6 @@ const Pagamento = () => {
   const isValidSecurityCode = (securityCode) => {
     // Implemente a validação real do código de segurança
     return /^[0-9]{3}$/.test(securityCode);
-  };
-
-  const isValidEmail = (email) => {
-    // Implemente a validação real do email
-    return /\S+@\S+\.\S+/.test(email);
   };
 
   return (
@@ -320,26 +296,6 @@ const Pagamento = () => {
               </div>
             </>
           )}
-
-          <label htmlFor="email" className="pagamento-label">
-            E-mail:
-          </label>
-          <input
-            type="email"
-            id="email"
-            value={formValues.email}
-            onChange={handleEmailChange}
-            className={`pagamento-inputtext ${
-              isFieldEmpty("email") ? "empty-field" : ""
-            }`}
-          />
-          {isFieldEmpty("email") && (
-            <p className="error-message">Campo obrigatório</p>
-          )}
-          {!isFieldEmpty("email") && !isValidEmail(formValues.email) && (
-            <p className="error-message">E-mail inválido</p>
-          )}
-
           <div className="pagamento-button-container">
             <button type="submit" className="pagamento-btn-pagar">
               Pagar

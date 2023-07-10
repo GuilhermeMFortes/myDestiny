@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
+import toastr from "toastr";
+import "toastr/build/toastr.css";
 import DatePicker from "react-datepicker";
+import { format } from "date-fns";
 import "../Styles/CatalogoViagens.css";
 import "react-datepicker/dist/react-datepicker.css";
 import {
@@ -14,10 +17,11 @@ import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { db } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import { ThemeContext } from "../contexts/ThemeContext";
+import { LoginContext } from "../contexts/LoginContext";
 
 function CatalogoViagens() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [dateRange, setDateRange] = useState([null, null]);
   const [numQuartos, setNumQuartos] = useState(1);
   const [numHospedes, setNumHospedes] = useState(1);
   const [imageUrls, setImageUrls] = useState([]);
@@ -25,6 +29,7 @@ function CatalogoViagens() {
   const storage = getStorage();
   const navigate = useNavigate();
   const { darkMode } = useContext(ThemeContext);
+  const { user } = useContext(LoginContext);
 
   useEffect(() => {
     const getPacotesData = async () => {
@@ -69,8 +74,8 @@ function CatalogoViagens() {
     setSearchTerm(event.target.value);
   };
 
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
+  const handleDateRangeChange = (dates) => {
+    setDateRange(dates);
   };
 
   const handleNumQuartosChange = (event) => {
@@ -84,15 +89,26 @@ function CatalogoViagens() {
   const handleSearchSubmit = async () => {
     try {
       const pacotesCollectionRef = collection(db, "pacotes");
-      let q;
-      if (searchTerm === "") {
-        q = query(pacotesCollectionRef);
-      } else {
+      let q = query(pacotesCollectionRef);
+
+      if (searchTerm !== "") {
         q = query(
           pacotesCollectionRef,
           where("keywords", "array-contains", searchTerm)
         );
       }
+
+      if (dateRange[0] && dateRange[1]) {
+        const startDate = dateRange[0];
+        const endDate = dateRange[1];
+
+        q = query(
+          pacotesCollectionRef,
+          where("DataViagem", ">=", startDate),
+          where("DataViagem", "<=", endDate)
+        );
+      }
+
       const pacotesData = await getDocs(q);
       const pacotes = pacotesData.docs.map((doc) => {
         return { id: doc.id, ...doc.data() };
@@ -104,8 +120,30 @@ function CatalogoViagens() {
   };
 
   const handleBuyPackage = async (id) => {
+    if (!user) {
+      // Redirecionar para a página de login se o usuário não estiver logado
+      navigate("/login");
+      return;
+    }
+  
     try {
-      // Redirecionar para a página de pagamento com o ID da compra como parâmetro na URL
+      const userEmail = user.email;
+  
+      // Verificar se o usuário já possui o pacote com o ID especificado
+      const pagamentosRef = collection(db, "pagamentos");
+      const q = query(
+        pagamentosRef,
+        where("pacoteId", "==", id),
+        where("email", "==", userEmail)
+      );
+      const pagamentosDocs = await getDocs(q);
+  
+      if (!pagamentosDocs.empty) {
+        toastr.warning("Esse pacote já foi adquirido pelo usuário.");
+        console.log("Esse pacote já foi adquirido pelo usuário.");
+        return;
+      }
+  
       navigate(`/pagamento?compraId=${id}`);
     } catch (error) {
       console.error("Erro ao comprar o pacote:", error);
@@ -145,6 +183,31 @@ function CatalogoViagens() {
             value={searchTerm}
             onChange={handleSearch}
           />
+          <div className="date-range-container">
+            <DatePicker
+              className="date-picker"
+              selected={dateRange[0]}
+              onChange={(date) => handleDateRangeChange([date, dateRange[1]])}
+              selectsStart
+              startDate={dateRange[0]}
+              endDate={dateRange[1]}
+              placeholderText="Data inicial"
+              dateFormat="dd/MM/yyyy"
+              isClearable
+            />
+            <DatePicker
+              className="date-picker"
+              selected={dateRange[1]}
+              onChange={(date) => handleDateRangeChange([dateRange[0], date])}
+              selectsEnd
+              startDate={dateRange[0]}
+              endDate={dateRange[1]}
+              minDate={dateRange[0]}
+              placeholderText="Data final"
+              dateFormat="dd/MM/yyyy"
+              isClearable
+            />
+          </div>
           <button
             className="search-button"
             onClick={handleSearchSubmit}
@@ -173,6 +236,10 @@ function CatalogoViagens() {
                 className={`destino-card-price ${darkMode ? "dark-mode" : ""}`}
               >
                 Preço: R$ {user.Preco}
+              </p>
+              <p className={`destino-card-date ${darkMode ? "dark-mode" : ""}`}>
+                Data:{" "}
+                {format(new Date(user.DataViagem.seconds * 1000), "dd/MM/yyyy")}
               </p>
               <button
                 className={`destino-card-btn ${darkMode ? "dark-mode" : ""}`}
